@@ -47,7 +47,7 @@ public class DiagnosticServiceImpl implements DiagnosticService {
     public void update(long id, DiagnosticDTO data) throws Exception{
         Optional<Diagnostic> entity = repository.findById(id);
         if(entity.isEmpty()){
-            throw new Exception("No se encontró el diagnostico con id ");
+            throw new Exception("No se encontró el diagnostico con id");
         }
         data.setId(entity.get().getId());
         repository.save(mapper.toEntity(data));
