@@ -1,6 +1,7 @@
 package com.mornaeldernar.api.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.Date;
 
@@ -18,6 +20,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name="diagnostic")
+@RestResource(rel="diagnostics",path="diagnostic")
 public class Diagnostic {
     
     @Id
@@ -25,6 +28,7 @@ public class Diagnostic {
     private long id;
 
     @Column(name="name", nullable = false)
+    @NotBlank(message = "El campo name no puede estar vacio")
     private String name;
     @Column(name="created_at")
     @CreationTimestamp

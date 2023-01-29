@@ -2,6 +2,7 @@ package com.mornaeldernar.api.controller;
 
 import com.mornaeldernar.api.dto.DoctorDTO;
 import com.mornaeldernar.api.service.DoctorService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class DoctorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> post(@RequestBody DoctorDTO data){
+    public ResponseEntity<Void> post(@Valid @RequestBody DoctorDTO data){
         var doctor = service.save(data);
         if(doctor == null) {
             return ResponseEntity.noContent().build();
@@ -54,7 +55,7 @@ public class DoctorController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> update(@PathVariable("id") long id, @RequestBody DoctorDTO data) {
+    public ResponseEntity<Void> update(@PathVariable("id") long id, @Valid @RequestBody DoctorDTO data) {
         try {
             log.info("Doctor {} updated",id);
             service.update(id, data);

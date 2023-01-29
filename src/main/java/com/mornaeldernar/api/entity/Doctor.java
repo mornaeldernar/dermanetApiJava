@@ -1,6 +1,7 @@
 package com.mornaeldernar.api.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,9 +28,11 @@ public class Doctor {
     private long id;
 
     @Column(name="name", nullable =false)
+    @NotBlank
     private String name;
 
     @Column(name="lastName", nullable = false)
+    @NotBlank
     private String lastName;
     
     @Column(name="created_at")

@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name="doctor")
+@RestResource(rel="images",path="image")
 public class Image {
     
     @Id

@@ -1,6 +1,7 @@
 package com.mornaeldernar.api.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -32,9 +33,11 @@ public class Patient {
     private long id;
 
     @Column(name = "name", nullable = false)
+    @NotBlank
     private String name;
 
     @Column(name = "lastName", nullable = false)
+    @NotBlank
     private String lastName;
 
     @Column(name = "birthdate", nullable = false)
