@@ -1,4 +1,5 @@
 # DermanetApiJava
+By Rafael Jimenez Orozco
 
 Api para manejo de doctores, pacientes y sus diagnosticos
 
