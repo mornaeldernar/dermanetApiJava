@@ -46,6 +46,7 @@ algunas anotaciones que se utilizan son
 ## Spring Data Rest
 - Las entidades diagnostic, image, speciality y user tienen la anotacion @RestResource para que Spring Data rest nos cree los endpoints necesarios para las operaciones CRUD
 - Las entidades Doctor, y Patient se manejan con controladores para tener un mejor manejo de las excepciones y saber cuales son los errores que nos impiden que realizar las operaciones, debido a que con spring security, todos los errores nos los manda como 401 Unauthorized
+![excepciones.png](img%2Fexcepciones.png)
 
 ## Authorization y Authentication
 
@@ -54,6 +55,11 @@ algunas anotaciones que se utilizan son
 - El endpoint /login cualquiera puede accesar para generar un Bearer token
 - En los demás endpoints se necesita enviar un Bearer token en el encabezado de Authorization para poder acceder
 
+## Pruebas
+- se realizan pruebas unitarias y con selenium para probar la api
+![tests.png](img%2Ftests.png)
+
+![selenium.png](img%2Fselenium.png)
 ## Despliegue 
 Se ejecuto la instrucción
 - mvnw.cmd package
