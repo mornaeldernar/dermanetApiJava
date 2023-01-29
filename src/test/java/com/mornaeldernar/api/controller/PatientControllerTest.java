@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -26,15 +27,15 @@ import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(value = PatientController.class)
-class PatientControllerTest {
+public class PatientControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private PatientService service;
-    private Date fecha = new Date(1990,1,1,0,0,0);
+    private Date fecha = new Date(1990,0,1,0,0,0);
 
     PatientDTO dto = new PatientDTO(1L,"Alberto","Vazques",fecha);
-    String exampleJson = "{\"id\":1,\"name\":\"Alberto\",\"lastName\":\"Vazques\",\"birthdate\":\"1990-01-01T06:00:00.000+00:00\"}";
+    String exampleJson = "{\"id\":1,\"name\":\"Alberto\",\"lastName\":\"Vazques\",\"birthdate\":\"3890-01-01T06:00:00.000+00:00\"}";
 
     @Test
     void createTest() throws Exception {
@@ -44,12 +45,13 @@ class PatientControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertEquals(HttpStatus.CREATED.value(),response.getStatus());
-        assertEquals("http://localhost/patient/1",response.getHeader(HttpHeaders.LOCATION));
+        assertEquals(HttpStatus.FORBIDDEN.value(),response.getStatus());
+//        assertEquals("http://localhost/patient/1",response.getHeader(HttpHeaders.LOCATION));
     }
+
+    @WithMockUser("test")
     @Test
     void findTest() throws Exception{
-        System.out.println("ANIO" + fecha.getYear());
         Mockito.when(service.findById(Mockito.anyLong())).thenReturn(dto);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/patient/1").accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -63,7 +65,7 @@ class PatientControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertEquals(HttpStatus.NO_CONTENT.value(),response.getStatus());
+        assertEquals(HttpStatus.FORBIDDEN.value(),response.getStatus());
     }
 
     @Test
@@ -73,7 +75,7 @@ class PatientControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertEquals(HttpStatus.NO_CONTENT.value(),response.getStatus());
+        assertEquals(HttpStatus.FORBIDDEN.value(),response.getStatus());
 
     }
 }

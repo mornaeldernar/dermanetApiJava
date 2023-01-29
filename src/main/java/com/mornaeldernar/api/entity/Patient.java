@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -37,7 +38,7 @@ public class Patient {
     private String lastName;
 
     @Column(name = "birthdate", nullable = false)
-    private Date birthdate;
+    private LocalDate birthdate;
 
     @Column(name="created_at")
     @CreationTimestamp

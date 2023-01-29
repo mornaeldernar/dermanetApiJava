@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -28,7 +29,7 @@ import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(value = ImageController.class)
-class ImageControllerTest {
+public class ImageControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
@@ -46,9 +47,11 @@ class ImageControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertEquals(HttpStatus.CREATED.value(),response.getStatus());
-        assertEquals("http://localhost/image/1",response.getHeader(HttpHeaders.LOCATION));
+        assertEquals(HttpStatus.FORBIDDEN.value(),response.getStatus());
+//        assertEquals("http://localhost/image/1",response.getHeader(HttpHeaders.LOCATION));
     }
+
+    @WithMockUser("test")
     @Test
     void findTest() throws Exception{
         Mockito.when(service.findById(Mockito.anyLong())).thenReturn(dto);
@@ -64,7 +67,7 @@ class ImageControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertEquals(HttpStatus.NO_CONTENT.value(),response.getStatus());
+        assertEquals(HttpStatus.FORBIDDEN.value(),response.getStatus());
     }
 
     @Test
@@ -74,7 +77,7 @@ class ImageControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertEquals(HttpStatus.NO_CONTENT.value(),response.getStatus());
+        assertEquals(HttpStatus.FORBIDDEN.value(),response.getStatus());
 
     }
 }

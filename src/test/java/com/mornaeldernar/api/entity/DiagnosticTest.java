@@ -6,7 +6,7 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DiagnosticTest {
+public class DiagnosticTest {
     private static Long id = 1l;
     private static Long id2 = 2l;
     private static String nombre = "Cancer";
