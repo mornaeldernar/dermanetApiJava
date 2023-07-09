@@ -2,7 +2,6 @@ package com.mornaeldernar.api.service.impl;
 
 
 import com.mornaeldernar.api.dto.DoctorDTO;
-import com.mornaeldernar.api.entity.Diagnostic;
 import com.mornaeldernar.api.entity.Doctor;
 import com.mornaeldernar.api.mapper.DoctorMapper;
 import com.mornaeldernar.api.repository.DoctorRepository;

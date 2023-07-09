@@ -21,4 +21,9 @@ public class PatientDTO {
     private String lastName;
     @PastOrPresent(message = "La fecha de nacimiento no puede ser despues del dia de hoy")
     private Date birthdate;
+    @NotBlank(message = "El sexo no puede estar vacio")
+    private String sex;
+    @NotBlank(message = "El telefono no puede estar vacio")
+    private String phone;
+    private String profesion;
 }

@@ -1,14 +1,14 @@
 package com.mornaeldernar.api.service;
 
 import com.mornaeldernar.api.dto.PatientDTO;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface PatientService {
-    
-    List<PatientDTO> findAll();
+
+    Page<PatientDTO> findAll(Pageable pageable );
+    Page<PatientDTO> findAllByName(String name, Pageable pageable );
 
     PatientDTO findById(long id) throws Exception;
 

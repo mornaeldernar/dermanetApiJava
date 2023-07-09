@@ -1,20 +1,20 @@
 package com.mornaeldernar.api.service.impl;
 
 import com.mornaeldernar.api.dto.PatientDTO;
-import com.mornaeldernar.api.entity.Image;
 import com.mornaeldernar.api.entity.Patient;
 import com.mornaeldernar.api.mapper.PatientMapper;
 import com.mornaeldernar.api.repository.PatientRepository;
 import com.mornaeldernar.api.service.PatientService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
 
+
+@Slf4j
 @Service
 public class PatientServiceImpl implements PatientService {
 
@@ -27,9 +27,15 @@ public class PatientServiceImpl implements PatientService {
         this.repository = repository;
     }
 
-    public List<PatientDTO> findAll(){
-        List<Patient> patients = repository.findAll();
-        return patients.stream().map(mapper::toDTO).toList();
+    public Page<PatientDTO> findAll(Pageable pageable ){
+        Page<Patient> patients =  repository.findAll(pageable);
+        return patients.map(mapper::toDTO);
+    }
+
+    public Page<PatientDTO> findAllByName(String name, Pageable pageable ){
+
+        Page<Patient> patients =  repository.findByNameContaining(name,pageable);
+        return patients.map(mapper::toDTO);
     }
 
     public PatientDTO findById(long id) throws Exception {
@@ -37,11 +43,15 @@ public class PatientServiceImpl implements PatientService {
         if(entity.isEmpty()){
             throw new Exception("No se encontró el diagnostico con id ");
         }
+
         return mapper.toDTO(entity.get());
     }
 
     public PatientDTO save(PatientDTO data) {
         Patient entity = mapper.toEntity(data);
+        entity.setPhone(data.getPhone());
+        entity.setSex(data.getSex());
+        entity.setProfesion(data.getProfesion());
         return mapper.toDTO(repository.save(entity));
     }
 

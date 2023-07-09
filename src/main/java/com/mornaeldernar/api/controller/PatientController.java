@@ -5,15 +5,15 @@ import com.mornaeldernar.api.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
-import java.util.Optional;
+
 @Slf4j
 @RequestMapping("/patient")
 @RestController
@@ -26,17 +26,21 @@ public class PatientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PatientDTO>> findAll(){
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<Page<PatientDTO>> findAll(@RequestParam(required = false) String name, @RequestParam int page, @RequestParam int size){
+        PageRequest pr = PageRequest.of(page,size);
+        if (name == null) {
+            return ResponseEntity.ok(service.findAll(pr));
+        } else {
+            return ResponseEntity.ok(service.findAllByName(name,pr));
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PatientDTO> find(@PathVariable("id") long id) {
-
         try {
             return ResponseEntity.ok(service.findById(id));
         } catch (Exception e) {
-            log.error(e.toString());
+            log.error(e.toString()+" id: "+id);
             return ResponseEntity.notFound().build();
         }
     }
@@ -55,7 +59,6 @@ public class PatientController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> update(@PathVariable("id") long id,@Valid  @RequestBody PatientDTO data) {
         try {
-            log.info("Patient {} updated",id);
             service.update(id, data);
         } catch (Exception e) {
             log.error(e.toString());

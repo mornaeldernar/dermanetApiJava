@@ -68,7 +68,7 @@ Se ejecuto la instrucción
 para genera el archivo target/api-0.0.1-SNAPSHOT.jar
 
 para ejecutarlo se ejecuta la instruccion:
-- java -jar target/guide-spring-boot-0.1.0.jar
+- java -jar target/api-0.0.1-SNAPSHOT.jar
 
 ## Open Liberty
 - No se utiliza Open liberty porque el proyecto esta hecho para spring boot 3 y open liberty solo ejecuta proyectos spring boot 2

@@ -2,17 +2,9 @@ package com.mornaeldernar.api.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -42,6 +34,14 @@ public class Patient {
 
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
+
+    @Column(name = "profesion")
+    private String profesion;
+    @Column(name = "sex")
+    private String sex;
+    @Column(name = "phone")
+    private String phone;
+
 
     @Column(name="created_at")
     @CreationTimestamp
